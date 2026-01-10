@@ -65,7 +65,7 @@ it("should not allow appointment in the past", async () => {
 it("should not allow appointment outside business hours", async () => {
   const date = new Date();
   date.setDate(date.getDate() + 1);
-  date.setHours(8, 0, 0, 0); // antes das 9h
+  date.setHours(7, 0, 0, 0); // antes das 8h
 
   const response = await request(app).post("/v1/appointments").send({
     name: "Anderson",
@@ -90,4 +90,36 @@ it("should not allow appointment with minutes different from zero", async () => 
 
   expect(response.status).toBe(400);
   expect(response.body.success).toBe(false);
+});
+
+it("should allow appointment exactly at 08:00", async () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(8, 0, 0, 0);
+
+  const response = await request(app).post("/v1/appointments").send({
+    name: "Anderson",
+    phone: "11999999999",
+    date,
+  });
+
+  expect(response.status).toBe(201);
+  expect(response.body.success).toBe(true);
+  expect(response.body.data).toHaveProperty("id");
+});
+
+it("should allow appointment exactly at 18:00", async () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(18, 0, 0, 0);
+
+  const response = await request(app).post("/v1/appointments").send({
+    name: "Anderson",
+    phone: "11999999999",
+    date,
+  });
+
+  expect(response.status).toBe(201);
+  expect(response.body.success).toBe(true);
+  expect(response.body.data).toHaveProperty("id");
 });
