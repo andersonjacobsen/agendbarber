@@ -15,7 +15,7 @@ export function validateAppointmentDate(date: Date) {
     throw new AppError("Agendamentos devem ser feitos em horas cheias", 400);
   }
 
-  if (hour < 8 || hour > 18) {
+  if (hour < 9 || hour > 18) {
     throw new AppError("Horário fora do expediente", 400);
   }
 }
