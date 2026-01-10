@@ -20,7 +20,7 @@ describe("Authentication", () => {
   });
 
   it("should be able to authenticate with valid credentials", async () => {
-    const response = await request(app).post("/v1/auth/login").send({
+    const response = await request(app).post("/v1/sessions").send({
       email: "anderson@email.com",
       password: "123456",
     });
