@@ -5,7 +5,7 @@ import { authRoutes } from "./auth.routes";
 const routes = Router();
 
 // versionamento aqui
-routes.use("/v1/appointments", appointmentRoutes);
-routes.use("/v1", authRoutes);
+routes.use("/appointments", appointmentRoutes);
+routes.use(authRoutes);
 
 export { routes };

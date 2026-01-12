@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { AppointmentController } from "../controllers/AppointmentController";
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 
 const router = Router();
 const controller = new AppointmentController();
@@ -41,7 +42,7 @@ const controller = new AppointmentController();
  *       400:
  *         description: Validation error
  */
-router.post("/", controller.create);
+router.post("/", ensureAuthenticated, controller.create);
 
 /**
  * @swagger
@@ -53,6 +54,6 @@ router.post("/", controller.create);
  *       200:
  *         description: List of appointments
  */
-router.get("/", controller.list);
+router.get("/", ensureAuthenticated, controller.list);
 
 export { router as appointmentRoutes };

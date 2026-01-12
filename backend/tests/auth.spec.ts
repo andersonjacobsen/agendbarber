@@ -1,19 +1,23 @@
 import request from "supertest";
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { app } from "../src/app";
 import { prisma } from "../src/lib/prisma";
 import bcrypt from "bcryptjs";
 
 describe("Authentication", () => {
-  beforeAll(async () => {
+  let email: string;
+  const password = "123456";
+
+  beforeEach(async () => {
     await prisma.user.deleteMany();
 
-    const passwordHash = await bcrypt.hash("123456", 8);
+    email = `test+${Date.now()}@test.com`;
+    const passwordHash = await bcrypt.hash(password, 8);
 
     await prisma.user.create({
       data: {
         name: "Anderson",
-        email: "anderson@email.com",
+        email,
         password: passwordHash,
       },
     });
@@ -21,16 +25,19 @@ describe("Authentication", () => {
 
   it("should be able to authenticate with valid credentials", async () => {
     const response = await request(app).post("/v1/sessions").send({
-      email: "anderson@email.com",
-      password: "123456",
+      email,
+      password,
     });
 
     expect(response.status).toBe(200);
 
     expect(response.body).toHaveProperty("token");
-    expect(response.body.user).toMatchObject({
-      name: "Anderson",
-      email: "anderson@email.com",
-    });
+
+    expect(response.body.user).toEqual(
+      expect.objectContaining({
+        name: "Anderson",
+        email,
+      })
+    );
   });
 });
