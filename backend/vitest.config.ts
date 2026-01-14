@@ -5,5 +5,12 @@ export default defineConfig({
     env: {
       NODE_ENV: "test",
     },
+
+    // Não rodar testes em paralelo
+    sequence: {
+      concurrent: false,
+    },
+
+    setupFiles: ["./tests/setup/setup.ts"],
   },
 });

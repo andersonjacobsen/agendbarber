@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "@prisma/client": "^6.19.1",
