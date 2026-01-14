@@ -38,8 +38,8 @@ describe("Appointments", () => {
 
   it("should be able to create an appointment", async () => {
     const date = new Date();
-    date.setDate(date.getDate() + 1);
-    date.setHours(13, 0, 0, 0);
+    date.setUTCDate(date.getUTCDate() + 1);
+    date.setUTCHours(13, 0, 0, 0);
 
     const response = await request(app)
       .post("/v1/appointments")
@@ -57,8 +57,8 @@ describe("Appointments", () => {
 
   it("should not allow two appointments at the same time", async () => {
     const date = new Date();
-    date.setDate(date.getDate() + 1);
-    date.setHours(10, 0, 0, 0);
+    date.setUTCDate(date.getUTCDate() + 1);
+    date.setUTCHours(10, 0, 0, 0);
 
     await request(app)
       .post("/v1/appointments")
@@ -84,8 +84,8 @@ describe("Appointments", () => {
 
   it("should not allow appointment in the past", async () => {
     const pastDate = new Date();
-    pastDate.setDate(pastDate.getDate() - 1);
-    pastDate.setHours(10, 0, 0, 0);
+    pastDate.setUTCDate(pastDate.getUTCDate() - 1);
+    pastDate.setUTCHours(10, 0, 0, 0);
 
     const response = await request(app)
       .post("/v1/appointments")
@@ -101,8 +101,8 @@ describe("Appointments", () => {
 
   it("should not allow appointment outside business hours", async () => {
     const date = new Date();
-    date.setDate(date.getDate() + 1);
-    date.setHours(7, 0, 0, 0);
+    date.setUTCDate(date.getUTCDate() + 1);
+    date.setUTCHours(7, 0, 0, 0);
 
     const response = await request(app)
       .post("/v1/appointments")
@@ -118,8 +118,8 @@ describe("Appointments", () => {
 
   it("should not allow appointment with minutes different from zero", async () => {
     const date = new Date();
-    date.setDate(date.getDate() + 1);
-    date.setHours(10, 30, 0, 0);
+    date.setUTCDate(date.getUTCDate() + 1);
+    date.setUTCHours(10, 30, 0, 0);
 
     const response = await request(app)
       .post("/v1/appointments")
@@ -135,8 +135,8 @@ describe("Appointments", () => {
 
   it("should allow appointment exactly at 08:00", async () => {
     const date = new Date();
-    date.setDate(date.getDate() + 1);
-    date.setHours(8, 0, 0, 0);
+    date.setUTCDate(date.getUTCDate() + 1);
+    date.setUTCHours(8, 0, 0, 0);
 
     const response = await request(app)
       .post("/v1/appointments")
@@ -152,8 +152,8 @@ describe("Appointments", () => {
 
   it("should allow appointment exactly at 18:00", async () => {
     const date = new Date();
-    date.setDate(date.getDate() + 1);
-    date.setHours(18, 0, 0, 0);
+    date.setUTCDate(date.getUTCDate() + 1);
+    date.setUTCHours(18, 0, 0, 0);
 
     const response = await request(app)
       .post("/v1/appointments")

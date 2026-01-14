@@ -8,8 +8,8 @@ export function validateAppointmentDate(date: Date) {
     throw new AppError("Não é possível agendar no passado", 400);
   }
 
-  const hour = appointmentDate.getHours();
-  const minutes = appointmentDate.getMinutes();
+  const hour = appointmentDate.getUTCHours();
+  const minutes = appointmentDate.getUTCMinutes();
 
   if (minutes !== 0) {
     throw new AppError("Agendamentos devem ser feitos em horas cheias", 400);
